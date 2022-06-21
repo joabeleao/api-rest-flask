@@ -9,6 +9,7 @@ Description:
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+
 from waitress import serve
 
 app = Flask(__name__)

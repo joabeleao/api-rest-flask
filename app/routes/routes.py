@@ -33,6 +33,7 @@ def doc():
     '''
     return jsonify({'doc': 'v1'})
 
+
 @app.route('/users', methods=['POST'])
 @token_required
 def user_post(user):
@@ -40,7 +41,6 @@ def user_post(user):
     Doc
     '''
     if user != 'admin':
-        #return jsonify({'message': 'access denied', 'data': {}}), 404
         abort(404)
 
     return post_user()
