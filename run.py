@@ -16,13 +16,13 @@ if __name__ == '__main__':
 
 
 ### swagger specific ###
-SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.json'
+SWAGGER_URL = '/api/v1/docs'
+API_URL = '/static/docs.json'
 SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
     config={
-        'app_name': "Seans-Python-Flask-REST-Boilerplate"
+        'app_name': "API-Python-Flask-REST"
     }
 )
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)

@@ -1,0 +1,266 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "API REST FLASK",
+        "description": "A sample API using flaks framework, Marshmallow and SQLAlchemy",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Joabe Leão",
+            "email": "joabe.leao1@gmail.com",
+            "url": "http://swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+       " application/json"
+    ],
+    "host": "localhost:2222/api",
+    "basePath": "/v1",
+    
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Returns list of users",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new user",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "required": true,
+                    "description": "User to create",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "John Doe"
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "johndoe"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "j1KiU87j0vG1r"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "john.doe@mail.com"
+                            }
+                        }
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/users/<id>": {
+            "get": {
+                "summary": "Return a user by its id",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "url",
+                    "required": "true",
+                    "description": "ID of the required user",
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "User not foud",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update and existing user",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                {
+                    "name": "id",
+                    "in": "url",
+                    "required": "true"
+                },
+                {
+                    "name": "user",
+                    "in": "body",
+                    "required": true,
+                    "description": "User to update",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "John updated Doe"
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "johndoe"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "j1KiU87j0vG1r"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "john.doe@updatedmail.com"
+                            }
+                        }
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a user by its id",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [{
+                    "name": "id",
+                    "in": "url",
+                    "required": "true",
+                    "description": "ID of the required user",
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "User not foud",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "summary": "Authenticate to get a valid token",
+                "tags": [
+                    "Auth"
+                ],
+                "parameters": [
+                    {
+                        "name": "credentials",
+                        "in": "body",
+                        "required": "true",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "johndoe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "j1KiU87j0vG1r"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "User not foud",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

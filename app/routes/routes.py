@@ -26,7 +26,7 @@ def root():
     '''
     return redirect(url_for('doc'))
 
-@app.route('/doc', methods=['GET'])
+@app.route('/api/v1/docs', methods=['GET'])
 def doc():
     '''
     doc
@@ -34,7 +34,7 @@ def doc():
     return jsonify({'doc': 'v1'})
 
 
-@app.route('/users', methods=['POST'])
+@app.route('/api/v1/users', methods=['POST'])
 @token_required
 def user_post(user):
     '''
@@ -45,18 +45,7 @@ def user_post(user):
 
     return post_user()
 
-@app.route('/users/<id>', methods=['PUT'])
-@token_required
-def user_update(user, id):
-    '''
-    Doc
-    '''
-    if user != 'admin':
-        abort(404)
-
-    return update_user(id)
-
-@app.route('/users', methods=['GET'])
+@app.route('/api/v1/users', methods=['GET'])
 @token_required
 def user_get(user):
     '''
@@ -67,7 +56,7 @@ def user_get(user):
 
     return get_users()
 
-@app.route('/users/<id>', methods=['GET'])
+@app.route('/api/v1/users/<id>', methods=['GET'])
 @token_required
 def userid_get(user, id):
     '''
@@ -78,7 +67,18 @@ def userid_get(user, id):
 
     return get_user(id)
 
-@app.route('/users/<id>', methods=['DELETE'])
+@app.route('/api/v1/users/<id>', methods=['PUT'])
+@token_required
+def user_update(user, id):
+    '''
+    Doc
+    '''
+    if user != 'admin':
+        abort(404)
+
+    return update_user(id)
+
+@app.route('/api/v1/users/<id>', methods=['DELETE'])
 @token_required
 def userid_delete(user, id):
     '''
@@ -89,21 +89,12 @@ def userid_delete(user, id):
 
     return delete_user(id)
 
-@app.route('/auth', methods=['POST'])
+@app.route('/api/v1/auth', methods=['POST'])
 def authenticate():
     '''
     Doc
     '''
     return auth()
 
-@app.route('/test', methods=['GET'])
-def teste():
-    '''
-    doc
-    '''
-    return jsonify({'message': 'test message'})
-
 #TODO
 # add function comments
-# add doc swagger
-# add v1 route
