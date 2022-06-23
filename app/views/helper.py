@@ -44,7 +44,11 @@ def auth():
     '''
     Doc
     '''
-    auth = request.authorization
+    try:
+        auth = request.authorization
+    except:
+        return jsonify({'message': 'Unauthorized', 'WWW-Authenticate': 'Basic auth=login and password required'}), 401
+
     if not auth or not auth.username or not auth.password:
         return jsonify({'message': 'Unauthorized', 'WWW-Authenticate': 'Basic auth=login and password required'}), 401
 
