@@ -1,11 +1,8 @@
 '''
 routes
 '''
-from flask import jsonify
 from flask import redirect
-from flask import url_for
 from flask import abort
-from pathlib import Path
 
 from app import app
 from app.views.users import get_users
@@ -16,22 +13,19 @@ from app.views.users import update_user
 from app.views.helper import auth
 from app.views.helper import token_required
 
-import json
-import os
-
 @app.route('/', methods=['GET'])
 def root():
     '''
     doc
     '''
-    return redirect(url_for('doc'))
+    return redirect('/api/v1/docs')
 
-@app.route('/api/v1/docs', methods=['GET'])
+@app.route('/docs', methods=['GET'])
 def doc():
     '''
     doc
     '''
-    return jsonify({'doc': 'v1'})
+    return redirect('/api/v1/docs')
 
 @app.route('/api/v1/users', methods=['POST'])
 @token_required
