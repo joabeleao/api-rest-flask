@@ -33,7 +33,6 @@ def doc():
     '''
     return jsonify({'doc': 'v1'})
 
-
 @app.route('/api/v1/users', methods=['POST'])
 @token_required
 def user_post(user):

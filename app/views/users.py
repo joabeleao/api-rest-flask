@@ -22,9 +22,9 @@ def post_user():
     user = Users(username, pass_hash, name, email)
 
     if query_user(username):
-        return jsonify({'message': 'Username already exists'}), 500
+        return jsonify({'message': 'Username already exists'}), 400
     elif query_email(email):
-        return jsonify({'message': 'Email already exists'}), 500
+        return jsonify({'message': 'Email already exists'}), 400
 
     try:
         db.session.add(user)
@@ -46,11 +46,11 @@ def update_user(id):
     user = Users.query.get(id)
 
     if not user:
-        return jsonify({'message': 'user does not exist', 'data': {}}), 404
+        return jsonify({'message': 'user not found', 'data': {}}), 404
     elif query_user(username):
-        return jsonify({'message': 'Unable to update, username already exists'}), 500
+        return jsonify({'message': 'Unable to update. Unavailable username'}), 400
     elif query_email(email):
-        return jsonify({'message': 'Unable to update, email already exists'}), 500
+        return jsonify({'message': 'Unable to update. Unabailable e-mail'}), 400
 
     pass_hash = generate_password_hash(password)
 
@@ -64,32 +64,10 @@ def update_user(id):
         db.session.commit()
 
         result = user_schema.dump(user)
-        return jsonify({'message': 'User successfully updated', 'data': result}), 201
+        return jsonify({'message': 'User successfully updated', 'data': result}), 200
 
     except:
         return jsonify({'message': 'Unable to update', 'data': {}}), 500
-
-def get_users():
-    '''
-    doc
-    '''
-    users = Users.query.all()
-    if users:
-        result = users_schema.dump(users)
-        return jsonify({'message': 'Successfully feched', 'data': result}), 201
-
-    return jsonify({'message': 'Unable to get data', 'data': {}}), 500
-
-def get_user(id):
-    '''
-    doc
-    '''
-    user = Users.query.get(id)
-    if user:
-        result = user_schema.dump(user)
-        return jsonify({'message': 'Successfully feched', 'data': result}), 201
-
-    return jsonify({'message': 'Unable to get data', 'data': {}}), 500
 
 def delete_user(id):
     '''
@@ -98,7 +76,7 @@ def delete_user(id):
     user = Users.query.get(id)
 
     if not user:
-        return jsonify({'message': 'User does not exist', 'data': {}}), 404
+        return jsonify({'message': 'User not found', 'data': {}}), 404
 
     if user:
         try:
@@ -110,6 +88,33 @@ def delete_user(id):
 
         except:
             return jsonify({'message': 'Unable to delete', 'data': {}}), 500
+
+def get_users():
+    '''
+    doc
+    '''
+    users = Users.query.all()
+    if users:
+        result = users_schema.dump(users)
+        return jsonify({'message': 'Successfully feched', 'data': result}), 200
+
+    return jsonify({'message': 'Unable to get data', 'data': {}}), 500
+
+def get_user(id):
+    '''
+    doc
+    '''
+    user = Users.query.get(id)
+
+    if not user:
+        return jsonify({'message': 'User not found', 'data': {}}), 404
+
+
+    if user:
+        result = user_schema.dump(user)
+        return jsonify({'message': 'Successfully feched', 'data': result}), 200
+
+    return jsonify({'message': 'Unable to get data', 'data': {}}), 500
 
 def query_user(username):
     '''

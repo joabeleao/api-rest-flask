@@ -25,11 +25,11 @@
     "basePath": "/v1",
     
     "securityDefinitions": {
-      "Bearer": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
-      }
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     },
 
     "schemes": [
@@ -45,14 +45,88 @@
                 ],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Successfully feched",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "created_on": {
+                                    "type": "string",
+                                    "example": "0000-00-00T00:00:00"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "john.doe@mail.com"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "example": "1"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "John Doe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "pbkdf2:sha256:260000$Ql6PiQcU8pTqSs0p$781cc39b628440e62627a62dd8c26d182f59b6f6797e2cb44dc6b123e1ac5fb1"
+                                },
+                                "username": {
+                                    "type": "string",
+                                    "example": "johndoe"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or expired"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "INTERNAL SERVER ERROR",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to get data"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                }
+                            }
                         }
                     }
                 }
@@ -64,7 +138,7 @@
                 ],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "parameters": [{
@@ -96,15 +170,101 @@
                 }],
                 "responses": {
                     "201": {
-                        "description": "OK"
+                        "description": "CREATED",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "created_on": {
+                                    "type": "string",
+                                    "example": "0000-00-00T00:00:00"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "john.doe@mail.com"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "example": "1"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "John Doe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "pbkdf2:sha256:260000$Ql6PiQcU8pTqSs0p$781cc39b628440e62627a62dd8c26d182f59b6f6797e2cb44dc6b123e1ac5fb1"
+                                },
+                                "username": {
+                                    "type": "string",
+                                    "example": "johndoe"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Failed. Bad post data."
-                    }
+                        "description": "BAD REQUEST",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "username or e-mail already exists"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or expired"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "INTERNAL SERVER ERROR",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to get data"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                }
+                            }
+                        }
+                    } 
                 }
             }
         },
-        "/users/<id>": {
+        "/users/{id}": {
             "get": {
                 "summary": "Return a user by its id",
                 "tags": [
@@ -112,12 +272,12 @@
                 ],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "parameters": [{
                     "name": "id",
-                    "in": "url",
+                    "in": "path",
                     "required": "true",
                     "description": "ID of the required user",
                 }],
@@ -125,13 +285,93 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "created_on": {
+                                    "type": "string",
+                                    "example": "0000-00-00T00:00:00"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "john.doe@mail.com"
+                                },
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "John Doe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "pbkdf2:sha256:260000$Ql6PiQcU8pTqSs0p$781cc39b628440e62627a62dd8c26d182f59b6f6797e2cb44dc6b123e1ac5fb1"
+                                },
+                                "username": {
+                                    "type": "string",
+                                    "example": "johndoe"
+                                }
+                            }
                         }
                     },
                     "401": {
-                        "description": "User not foud",
+                        "description": "UNAUTHORIZED",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or expired"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "INTERNAL SERVER ERROR",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to get data"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                }
+                            }
                         }
                     }
                 }
@@ -143,13 +383,13 @@
                 ],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "parameters": [
                 {
                     "name": "id",
-                    "in": "url",
+                    "in": "path",
                     "required": "true"
                 },
                 {
@@ -166,7 +406,7 @@
                             },
                             "username": {
                                 "type": "string",
-                                "example": "johndoe"
+                                "example": "johndoe.updated"
                             },
                             "password": {
                                 "type": "string",
@@ -180,11 +420,109 @@
                     }
                 }],
                 "responses": {
-                    "201": {
-                        "description": "OK"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "created_on": {
+                                    "type": "string",
+                                    "example": "0000-00-00T00:00:00"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "john.doe@updatedmail.com"
+                                },
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "John updated Doe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "pbkdf2:sha256:260000$Ql6PiQcU8pTqSs0p$781cc39b628440e62627a62dd8c26d182f59b6f6797e2cb44dc6b123e1ac5fb1"
+                                },
+                                "username": {
+                                    "type": "string",
+                                    "example": "johndoe.updated"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Failed. Bad post data."
+                        "description": "BAD REQUEST",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to update. Unavailable username or e-mail"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or expired"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "INTERNAL SERVER ERROR",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to get data"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -195,12 +533,12 @@
                 ],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "parameters": [{
                     "name": "id",
-                    "in": "url",
+                    "in": "path",
                     "required": "true",
                     "description": "ID of the required user",
                 }],
@@ -208,13 +546,93 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "created_on": {
+                                    "type": "string",
+                                    "example": "0000-00-00T00:00:00"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "john.doe@updatedmail.com"
+                                },
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "John updated Doe"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "pbkdf2:sha256:260000$Ql6PiQcU8pTqSs0p$781cc39b628440e62627a62dd8c26d182f59b6f6797e2cb44dc6b123e1ac5fb1"
+                                },
+                                "username": {
+                                    "type": "string",
+                                    "example": "johndoe.updated"
+                                }
+                            }
                         }
                     },
                     "401": {
-                        "description": "User not foud",
+                        "description": "UNAUTHORIZED",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "token is invalid or expired"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "INTERNAL SERVER ERROR",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unable to get data"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "example": "{}"
+                                }
+                            }
                         }
                     }
                 }
@@ -234,7 +652,7 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "name": {
+                                "username": {
                                     "type": "string",
                                     "example": "johndoe"
                                 },
@@ -250,13 +668,49 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "exp": {
+                                    "type": "string",
+                                    "example": "Day, 00 Mon 0000 00:00:00 GMT"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Validated successfully"
+                                },
+                                "token": {
+                                    "type": "string",
+                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1Nfsai1iJ9.eyJ1c2VybmFtZSI6ImFkbWluIiw141LaiZXhwIjoxNjU2MDI1NTE4fQ.o_De11N3VW4e5saxQFiW2t-WiOlaamad_dgNigadsfhaV-YY12311ko"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "json",
+                                    "example": "Invalid username or password"
+                                }
+                            }
                         }
                     },
                     "401": {
-                        "description": "User not foud",
+                        "description": "UNAUTHORIZED",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "WWW-Authenticate": {
+                                    "type": "string",
+                                    "example": "Basic auth=login and password required"
+                                },
+                                "message": {
+                                    "type": "json",
+                                    "example": "Unauthorized"
+                                }
+                            }
                         }
                     }
                 }
