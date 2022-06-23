@@ -22,13 +22,15 @@
        " application/json"
     ],
     "host": "localhost:2222/api",
-    "basePath": "/v1",
-    
+    "basePath": "/v1", 
     "securityDefinitions": {
         "Bearer": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
+        },
+        "basicAuth": {
+            "type": "basic"
         }
     },
 
@@ -644,6 +646,11 @@
                 "tags": [
                     "Auth"
                 ],
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "credentials",
@@ -654,11 +661,11 @@
                             "properties": {
                                 "username": {
                                     "type": "string",
-                                    "example": "johndoe"
+                                    "example": "admin"
                                 },
                                 "password": {
                                     "type": "string",
-                                    "example": "j1KiU87j0vG1r"
+                                    "example": "1234"
                                 }
                             }
                         }
