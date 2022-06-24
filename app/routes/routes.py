@@ -1,5 +1,5 @@
 '''
-routes
+Endpoint settings
 '''
 from flask import redirect
 from flask import abort
@@ -58,36 +58,36 @@ def user_get(user):
 
 @app.route('/api/v1/users/<id>', methods=['GET'])
 @token_required
-def userid_get(user, id):
+def userid_get(user, user_id):
     '''
     Doc
     '''
     if user != 'admin':
         abort(404)
 
-    return get_user(id)
+    return get_user(user_id)
 
 @app.route('/api/v1/users/<id>', methods=['PUT'])
 @token_required
-def user_update(user, id):
+def user_update(user, user_id):
     '''
     Doc
     '''
     if user != 'admin':
         abort(404)
 
-    return update_user(id)
+    return update_user(user_id)
 
 @app.route('/api/v1/users/<id>', methods=['DELETE'])
 @token_required
-def userid_delete(user, id):
+def userid_delete(user, user_id):
     '''
     Doc
     '''
     if user != 'admin':
         abort(404)
 
-    return delete_user(id)
+    return delete_user(user_id)
 
 @app.route('/api/v1/auth', methods=['POST'])
 def authenticate():
@@ -95,6 +95,3 @@ def authenticate():
     Doc
     '''
     return auth()
-
-#TODO
-# add function comments

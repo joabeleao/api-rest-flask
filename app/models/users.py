@@ -1,16 +1,14 @@
 '''
-doc
+Database models creation
 '''
-from app import app
+import datetime
+
 from app import db
 from app import ma
-
-import datetime
 
 class Users(db.Model):
     '''
         User's table, class and field definition
-    
     '''
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -30,7 +28,12 @@ class UsersSchema(ma.Schema):
         Setting Marshmallow scheme to make json usage easier
     '''
     class Meta:
+        '''
+            Database fieds
+            Since using marshmallow with SQLAlchemy a meta class must be created
+            It will use the filds created on model above
+        '''
         fields = ('id', 'username', 'name', 'email', 'password', 'created_on')
 
 user_schema = UsersSchema()
-users_schema = UsersSchema(many=True)
+users_schema = UsersSchema(many=True) # many = array
