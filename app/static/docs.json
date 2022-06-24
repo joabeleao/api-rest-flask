@@ -264,7 +264,7 @@
         },
         "/users/{id}": {
             "get": {
-                "summary": "Return a user by its id",
+                "summary": "Return user information",
                 "tags": [
                     "Users"
                 ],
@@ -525,7 +525,7 @@
                 }
             },
             "delete": {
-                "summary": "Delete a user by its id",
+                "summary": "Delete a user",
                 "tags": [
                     "Users"
                 ],
