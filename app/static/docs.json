@@ -37,7 +37,7 @@
     "paths": {
         "/users": {
             "get": {
-                "summary": "Returns list of users",
+                "summary": "Returns list of available users on database",
                 "tags": [
                     "Users"
                 ],
@@ -47,8 +47,8 @@
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Successfully feched",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -642,13 +642,13 @@
                 "tags": [
                     "Auth"
                 ],
+                "description": "The authentication is set to **Basic auth**.\nA **base64** username and password must be sent in the **authorization header**.\nFor this doc as an example, one can use the following admin credentials:\n\n `Basic YWRtaW46MTIzNA==` ",
                 "parameters": [
                     {
                         "name": "Authorization",
                         "in": "header",
                         "required": "true",
-                        "type": "string",
-                        "description": "username:password (base64)"
+                        "description": "Basic username:password"
                     }
                 ],
                 "responses": {
