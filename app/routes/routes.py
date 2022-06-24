@@ -20,8 +20,15 @@ def root():
     '''
     return redirect('/api/v1/docs')
 
-@app.route('/docs', methods=['GET'])
+@app.route('/doc', methods=['GET'])
 def doc():
+    '''
+    doc
+    '''
+    return redirect('/api/v1/docs')
+
+@app.route('/docs', methods=['GET'])
+def docs():
     '''
     doc
     '''
