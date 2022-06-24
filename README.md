@@ -32,7 +32,7 @@ Create the database ( also, change the db name on config file `config.py` ):
 
     mysql -uroot -p'password' -e 'create database app'
 
-Create the database scheme and admin user via `python` cli.
+Create the database scheme and admin user via `python` cli inside project folder.
 
 First, import the packages:
 

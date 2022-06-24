@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0",
         "title": "API REST FLASK",
-        "description": "A sample API using flaks framework, Marshmallow and SQLAlchemy",
+        "description": "A sample API using flask framework, Marshmallow and SQLAlchemy",
         "contact": {
             "name": "Joabe Leão",
             "email": "joabe.leao1@gmail.com",
