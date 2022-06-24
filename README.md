@@ -7,7 +7,7 @@ REST API - Flask framework with waitress WSGI, Marshmallow and SQLAlchemy
 
 # Installation
 
-**Test scenario:**
+**Tested scenario:**
 
 - Debian Buster
 - Python 3.10.4
