@@ -1,23 +1,23 @@
 # api-rest-flask
 REST API - Flask framework with waitress WSGI, Marshmallow and SQLAlchemy
 
+**Endpoints documentation**
+
+    http://localhost:2222/api/v1/docs
+
 # Installation
 
-Scenario tested on:
+**Scenario:**
 
 - Debian Buster
 - Python 3.10.4
 - Flask + waitress 2.1.2; SQLAlchemy 1.4.37, marshmallow 3.16.0, Werkzeug 2.1.2; flask-swagger-ui 4.11.1
-- nginx
+- nginx 1.18
 - mysql 15 Distrib MariaDB 10.6
 
 ## Local setup
 
-Python venv:
-
-venv
-
-### Database setup
+**Database:**
 
 Server installation:
 
@@ -32,7 +32,7 @@ Create the database ( also, change the db name on config file `config.py` ):
 
     mysql -uroot -p'password' -e 'create database app'
 
-Create the database scheme and admin user via python cli.
+Create the database scheme and admin user via `python` cli.
 
 First, import the packages:
 
@@ -60,7 +60,7 @@ Create on database and commit:
     print(user_schema.dump(user))
 
 
-Testing the app
+**Testing the app**
 
     waitress-serve --url-prefix=/my-app --listen=0.0.0.0:2222 run:app
     
@@ -71,17 +71,17 @@ on browser:
 
 ## Web setup
 
-Create/edit the nginx configuration file `/etc/nginx/sites-available/datatodash.local.conf` and add the following content:
+Create/edit the nginx configuration file `/etc/nginx/sites-available/apirestflask.local.conf` and add the following content:
 
     server {
         listen 80;
-        server_name datatodash.local;
+        server_name apirestflask.local;
     
-        error_log /var/log/nginx/datatodash.local_error.log info;
+        error_log /var/log/nginx/apirestflask.local_error.log info;
     
         ## Simple security tweaks
         # only accept this domain
-        if ($host !~ ^(datatodash.local)$ ) {
+        if ($host !~ ^(apirestflask.local)$ ) {
             return 444;
         }
         # allow only GET
@@ -105,7 +105,7 @@ Create/edit the nginx configuration file `/etc/nginx/sites-available/datatodash.
 
 Enable the configuration file by creating the symlink:
 
-    ln -s /etc/nginx/sites-available/datatodash.local.conf /etc/nginx/sites-enabled/datatodash.local.conf
+    ln -s /etc/nginx/sites-available/apirestflask.local.conf /etc/nginx/sites-enabled/apirestflask.local.conf
 
 Test new settings
 
@@ -115,10 +115,10 @@ If everything is ok restart nginx
 
     service nginx restart
 
-## Setup to run as service
+## Service setup
 
 
-Create/Edit the service file in `/etc/systemd/system/datatodash.service` and add the following content:
+Create/Edit the service file in `/etc/systemd/system/apirestflask.service` and add the following content:
 
     [Unit]
     Description=Data To Dash API
@@ -127,7 +127,7 @@ Create/Edit the service file in `/etc/systemd/system/datatodash.service` and add
     [Service]
     Type=simple
     User=root
-    WorkingDirectory=/path/to/datatodash/
+    WorkingDirectory=/path/to/apirestflask/
     
     ExecStart=/path/to/venv/bin/waitress-serve --url-prefix=/my-app --listen=0.0.0.0:2222 run:app
     Restart=always
@@ -137,12 +137,12 @@ Create/Edit the service file in `/etc/systemd/system/datatodash.service` and add
 
 Start and enable the app service:
 
-    systemctl start datatodash
-    systemctl enable datatodash
+    systemctl start apirestflask
+    systemctl enable apirestflask
 
 ** Create access rule on your firewall if needed
 
-## References
+# References
 
 - https://faun.pub/deploy-flask-app-with-nginx-using-gunicorn-7fda4f50066a
 - https://www.devdungeon.com/content/run-python-wsgi-web-app-waitress
