@@ -62,7 +62,7 @@ Create on database and commit:
 
 **Testing the app**
 
-    waitress-serve --url-prefix=/my-app --listen=0.0.0.0:2222 run:app
+    waitress-serve --url-prefix=/app --listen=0.0.0.0:2222 run:app
     
 on browser:
 
@@ -129,7 +129,7 @@ Create/Edit the service file in `/etc/systemd/system/apirestflask.service` and a
     User=root
     WorkingDirectory=/path/to/apirestflask/
     
-    ExecStart=/path/to/venv/bin/waitress-serve --url-prefix=/my-app --listen=0.0.0.0:2222 run:app
+    ExecStart=/path/to/venv/bin/waitress-serve --url-prefix=/app --listen=0.0.0.0:2222 run:app
     Restart=always
     
     [Install]
