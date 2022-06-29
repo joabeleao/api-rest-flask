@@ -8,7 +8,7 @@ REST API - Flask framework with waitress WSGI, Marshmallow and SQLAlchemy
 # Installation
 
 **Tested scenario:**
-
+- Ubuntu 22.04 LTS (Jammy Jellyfish)
 - Debian Buster
 - Python 3.10.4
 - Flask + waitress 2.1.2; SQLAlchemy 1.4.37, marshmallow 3.16.0, Werkzeug 2.1.2; flask-swagger-ui 4.11.1
@@ -19,11 +19,23 @@ REST API - Flask framework with waitress WSGI, Marshmallow and SQLAlchemy
 
 **Database:**
 
-Server installation:
+Server installation (root needed):
 
-    sudo apt install mariadb
-    sudo apt install libmariadb-dev
-    
+    apt install mariadb
+
+or (Debian) 
+
+    apt install mariadb-server
+
+Server dev libs
+
+    apt install libmariadb-dev
+
+Start and enable mysql server
+
+    systemctl status mysql
+    systemctl enable mysql
+
 Set server password ( also, change it on config file `config.py` ):
  
     sudo mysql_secure_installation
@@ -42,7 +54,7 @@ First, import the packages:
 
 Initiate schema:
 
-    db.create_all
+    db.create_all()
 
 Generate admin password hash:
   

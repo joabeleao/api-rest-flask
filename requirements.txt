@@ -5,7 +5,6 @@ flask_swagger_ui
 marshmallow-sqlalchemy
 waitress
 setuptools
-setuptools
 requests
 cachetools
 mysqlclient
