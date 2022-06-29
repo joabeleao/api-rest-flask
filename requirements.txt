@@ -2,6 +2,7 @@ flask
 Flask-SQLAlchemy
 flask_marshmallow
 flask_swagger_ui
+flask_cors
 marshmallow-sqlalchemy
 waitress
 setuptools
