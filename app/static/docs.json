@@ -27,6 +27,9 @@
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
+        },
+        "BasicAuth": {
+            "type": "basic"
         }
     },
 
@@ -35,6 +38,71 @@
         "https"
     ],
     "paths": {
+        "/auth": {
+            "post": {
+                "summary": "Retorna um token válido com duração de 12hrs.",
+                "tags": [
+                    "Auth"
+                ],
+                "description": "The authentication is set to **Basic auth**.\n
+                A **base64** username and password must be sent in the **authorization header**.\n",
+                "security": [
+                    {
+                        "BasicAuth" : []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "exp": {
+                                    "type": "string",
+                                    "example": "Day, 00 Mon 0000 00:00:00 GMT"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Validated successfully"
+                                },
+                                "token": {
+                                    "type": "string",
+                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1Nfsai1iJ9.eyJ1c2VybmFtZSI6ImFkbWluIiw141LaiZXhwIjoxNjU2MDI1NTE4fQ.o_De11N3VW4e5saxQFiW2t-WiOlaamad_dgNigadsfhaV-YY12311ko"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "FORBIDDEN",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "json",
+                                    "example": "Invalid username or password"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "WWW-Authenticate": {
+                                    "type": "string",
+                                    "example": "Basic auth=login and password required"
+                                },
+                                "message": {
+                                    "type": "json",
+                                    "example": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "summary": "Returns list of available users on database",
@@ -80,52 +148,13 @@
                         }
                     },
                     "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or missing"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/401"
                     },
                     "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or expired"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/403"
                     },
                     "500": {
-                        "description": "INTERNAL SERVER ERROR",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unable to get data"
-                                },
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/500"
                     }
                 }
             },
@@ -212,52 +241,13 @@
                         }
                     },
                     "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or missing"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/401"
                     },
                     "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or expired"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/403"
                     },
                     "500": {
-                        "description": "INTERNAL SERVER ERROR",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unable to get data"
-                                },
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/500"
                     } 
                 }
             }
@@ -313,36 +303,10 @@
                         }
                     },
                     "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or missing"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/401"
                     },
                     "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or expired"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/403"
                     },
                     "404": {
                         "description": "NOT FOUND",
@@ -357,20 +321,7 @@
                         }
                     },
                     "500": {
-                        "description": "INTERNAL SERVER ERROR",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unable to get data"
-                                },
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/500"
                     }
                 }
             },
@@ -463,36 +414,10 @@
                         }
                     },
                     "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or missing"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/401"
                     },
                     "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or expired"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/403"
                     },
                     "404": {
                         "description": "NOT FOUND",
@@ -507,20 +432,7 @@
                         }
                     },
                     "500": {
-                        "description": "INTERNAL SERVER ERROR",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unable to get data"
-                                },
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/500"
                     }
                 }
             },
@@ -574,36 +486,10 @@
                         }
                     },
                     "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or missing"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/401"
                     },
                     "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "token is invalid or expired"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/403"
                     },
                     "404": {
                         "description": "NOT FOUND",
@@ -618,87 +504,57 @@
                         }
                     },
                     "500": {
-                        "description": "INTERNAL SERVER ERROR",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unable to get data"
-                                },
-                                "data": {
-                                    "type": "string",
-                                    "example": "{}"
-                                }
-                            }
-                        }
+                        "$ref": "#/definitions/500"
+                    }
+                }
+            }
+        } 
+    },
+    "definitions" : {
+        "401" : {
+            "description": "UNAUTHORIZED",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "example": "{}"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "token is invalid or missing"
                     }
                 }
             }
         },
-        "/auth": {
-            "post": {
-                "summary": "Authenticate to get a valid token",
-                "tags": [
-                    "Auth"
-                ],
-                "description": "The authentication is set to **Basic auth**.\nA **base64** username and password must be sent in the **authorization header**.\nFor this doc as an example, one can use the following admin credentials:\n\n `Basic YWRtaW46MTIzNA==` ",
-                "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": "true",
-                        "description": "Basic username:password"
+        "403" : {
+            "description": "FORBIDDEN",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "example": "{}"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "token is invalid or expired"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "exp": {
-                                    "type": "string",
-                                    "example": "Day, 00 Mon 0000 00:00:00 GMT"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "Validated successfully"
-                                },
-                                "token": {
-                                    "type": "string",
-                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1Nfsai1iJ9.eyJ1c2VybmFtZSI6ImFkbWluIiw141LaiZXhwIjoxNjU2MDI1NTE4fQ.o_De11N3VW4e5saxQFiW2t-WiOlaamad_dgNigadsfhaV-YY12311ko"
-                                }
-                            }
-                        }
+                }
+            }
+        },
+        "500" : {
+            "description": "INTERNAL SERVER ERROR",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Unable to get data"
                     },
-                    "403": {
-                        "description": "FORBIDDEN",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "json",
-                                    "example": "Invalid username or password"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "UNAUTHORIZED",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "WWW-Authenticate": {
-                                    "type": "string",
-                                    "example": "Basic auth=login and password required"
-                                },
-                                "message": {
-                                    "type": "json",
-                                    "example": "Unauthorized"
-                                }
-                            }
-                        }
+                    "data": {
+                        "type": "string",
+                        "example": "{}"
                     }
                 }
             }
